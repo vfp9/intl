@@ -24,7 +24,7 @@ _翻译  xinjie  2021.06.27_
 
 - [安装 INTL](#installing-intl)
 - [INTL: 如何...](#intl-how-to)
-  * [如何将您的 INTL 文件放置在正确的位置](#how-to-correctly-place-your-intl-files)
+  * [如何将您的 INTL 文件放置在正确的位置](#如何正确放置你的-INTL-文件)
   * [如何实例化一个 INTL 对象](#how-to-instantiate-an-intl-object)
   * [如何本地化表单](#how-to-localize-forms)
   * [如何自动本地化表单](#how-to-get-automatic-form-localization)
