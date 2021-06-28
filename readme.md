@@ -7,50 +7,52 @@
 [![issues](https://img.shields.io/github/issues/StevenBlack/intl)](https://img.shields.io/github/issues/StevenBlack/intl)
 [![BTC](https://img.shields.io/keybase/btc/StevenBlack)](https://img.shields.io/keybase/btc/StevenBlack)
 
-***INTL makes short work of creating multilingual software in Visual FoxPro (VFP).***
-It gives you the ability to create multilingual Visual FoxPro applications while minimizing the hassles of creating multi-version software.
+_翻译  xinjie  2021.06.27_
 
-This document serves to describe the following:
+***INTL 可以快速的在 Visual FoxPro(VFP) 中创建多语言软件。***
+它能够使您创建多语言 Visual FoxPro 应用程序，并最大限度的减少创建多版本过程中的麻烦。
+
+此文档包含以下内容：
 
 * [The INTL Toolkit](#installing-intl) for Visual FoxPro,
 * [GENMENUX](#using-genmenux),
-* [non-linguistic and strategic issues](#international-issues) in international development with VFP,
-* [VFP’s international features](#vfps-international-features), and
-* [other issues germane to spanning locales](#localization-factors-to-consider) with your VFP applications.
+* [非语言和战略问题](#international-issues) 和 VFP 的国际化开发,
+* [VFP 的国际化开发特性](#vfps-international-features), 和
+* [与 VFP 应用程序相关的跨地域相关的其他问题](#localization-factors-to-consider) .
 
-## Table of Contents
+## 目留
 
-- [Installing INTL](#installing-intl)
-- [INTL: How to...](#intl-how-to)
-  * [How to Correctly Place Your INTL Files](#how-to-correctly-place-your-intl-files)
-  * [How to Instantiate an INTL Object](#how-to-instantiate-an-intl-object)
-  * [How to Localize Forms](#how-to-localize-forms)
-  * [How to Get Automatic Form Localization](#how-to-get-automatic-form-localization)
-  * [How to Localize Menus](#how-to-localize-menus)
-  * [How to Change the Current Language](#how-to-change-the-current-language)
-  * [How to Swap Languages on the Fly](#how-to-swap-languages-on-the-fly)
-  * [How to Work With Locales](#how-to-work-with-locales)
-  * [How to Demo your App in Swahili Today](#how-to-demo-your-app-in-swahili-today)
-  * [How to Configure Your Main INTL Object](#how-to-configure-your-main-intl-object)
-  * [How to Configure Strategies](#how-to-configure-strategies)
-  * [How to Localize Strings](#how-to-localize-strings)
-  * [How to Localize Fonts](#how-to-localize-fonts)
-  * [How to Localize Data Sources](#how-to-localize-data-sources)
-  * [How to Localize Pictures](#how-to-localize-pictures)
-  * [How to Localize Currencies](#how-to-localize-currencies)
-  * [How to Localize for Right-To-Left Writing Systems](#how-to-localize-for-right-to-left-writing-systems)
-  * [How to Subclass an Existing Strategy](#how-to-subclass-an-existing-strategy)
-  * [How to Create Your Own Generic Strategy](#how-to-create-your-own-generic-strategy)
-  * [How to Make INTL Ignore an Object](#how-to-make-intl-ignore-an-object)
-  * [How to Make INTL Treat an Object Differently](#how-to-make-intl-treat-an-object-differently)
-  * [How to Substitute Your Own Strategies](#how-to-substitute-your-own-strategies)
-  * [How to Batch-Update `strings.dbf`](#how-to-batch-update-stringsdbf)
-  * [How to Localize Reports](#how-to-localize-reports)
-  * [Details of How INTL Works](#details-of-how-intl-works)
-  * [Details of How `MsgSvc()` Works](#details-of-how-msgsvc-works)
-  * [How to Distribute INTL Files](#how-to-distribute-intl-files)
-  * [Toolkit File Descriptions](#toolkit-file-descriptions)
-  * [Overview of the INTL Class Library](#overview-of-the-intl-class-library)
+- [安装 INTL](#installing-intl)
+- [INTL: 如何...](#intl-how-to)
+  * [如何将您的 INTL 文件放置在正确的位置](#how-to-correctly-place-your-intl-files)
+  * [如何实例化一个 INTL 对象](#how-to-instantiate-an-intl-object)
+  * [如何本地化表单](#how-to-localize-forms)
+  * [如何自动本地化表单](#how-to-get-automatic-form-localization)
+  * [如何本地化菜单](#how-to-localize-menus)
+  * [如何更改当前的语言](#how-to-change-the-current-language)
+  * [如何在运行时切换语音](#how-to-swap-languages-on-the-fly)
+  * [如何使用语言环境](#how-to-work-with-locales)
+  * [如何用斯瓦希里语演示你的应用程序](#how-to-demo-your-app-in-swahili-today)
+  * [如何配置您的主INTL对象](#how-to-configure-your-main-intl-object)
+  * [如何配置策略](#how-to-configure-strategies)
+  * [如何本地化字符串](#how-to-localize-strings)
+  * [如何本地化字体](#how-to-localize-fonts)
+  * [如何本地化数据源](#how-to-localize-data-sources)
+  * [如何本地化图片](#how-to-localize-pictures)
+  * [如何本地化货币值](#how-to-localize-currencies)
+  * [如何本地化从右到左的书写顺序](#how-to-localize-for-right-to-left-writing-systems)
+  * [如何对现有策略进行子类化](#how-to-subclass-an-existing-strategy)
+  * [如何创建自己的通用策略](#how-to-create-your-own-generic-strategy)
+  * [如何使 INTL 忽略一个对象](#how-to-make-intl-ignore-an-object)
+  * [如何使 INTL 区别对待对象](#how-to-make-intl-treat-an-object-differently)
+  * [如何替代您自己的策略](#how-to-substitute-your-own-strategies)
+  * [如何批量更新 `strings.dbf`](#how-to-batch-update-stringsdbf)
+  * [如何本地化报表](#how-to-localize-reports)
+  * [INTL 运行的细节](#details-of-how-intl-works)
+  * [`MsgSvc()` 的工作原理](#details-of-how-msgsvc-works)
+  * [如何分发 INTL 文件](#how-to-distribute-intl-files)
+  * [Toolkit 文件说明](#toolkit-file-descriptions)
+  * [INTL 类库概述](#overview-of-the-intl-class-library)
   * [Class `INTL`](#class-intl)
   * [Class `cINTLAbstract`](#class-cintlabstract)
   * [Class `cINTLCurrency`](#class-cintlcurrency)
@@ -61,80 +63,80 @@ This document serves to describe the following:
   * [Class `cINTLRightToLeft`](#class-cintlrighttoleft)
   * [Class `cINTLStrategy`](#class-cintlstrategy)
   * [Class `cINTLString`](#class-cintlstring)
-- [Localizing VFP Menus](#localizing-vfp-menus)
-  * [Using GENMENUX to Invoke INTL](#using-genmenux-to-invoke-intl)
-  * [INTL `config.fpw` Menu Statements](#intl-configfpw-menu-statements)
-  * [INTL Menu Memory Variables](#intl-menu-memory-variables)
-  * [Two Very Useful GENMENUX Comment Directives](#two-very-useful-genmenux-comment-directives)
-- [Message Services](#message-services)
-  * [Introduction](#introduction)
-  * [Up And Running](#up-and-running)
-  * [`MsgSvc()` Dialog Return Values](#msgsvc-dialog-return-values)
-  * [Fields in MsgSvc.DBF](#fields-in-msgsvcdbf)
-  * [`MsgSvc()` Examples](#msgsvc-examples)
-  * [Localizing Smart](#localizing-smart)
+- [本地化菜单](#localizing-vfp-menus)
+  * [使 GENMENUX 调用 INTL](#using-genmenux-to-invoke-intl)
+  * [INTL `config.fpw` 菜单语句](#intl-configfpw-menu-statements)
+  * [INTL 菜单内存变量](#intl-menu-memory-variables)
+  * [两个实用的 GENMENUX 注释指令](#two-very-useful-genmenux-comment-directives)
+- [消息服务](#message-services)
+  * [简介](#introduction)
+  * [启动和运行](#up-and-running)
+  * [`MsgSvc()` 对话框返回值](#msgsvc-dialog-return-values)
+  * [MsgSvc.DBF 中的字段](#fields-in-msgsvcdbf)
+  * [`MsgSvc()` 示例](#msgsvc-examples)
+  * [智能的本地化](#localizing-smart)
 - [INTLTool](#intltool)
-  * [Iterators And Visitors](#iterators-and-visitors)
-  * [Updating `strings.dbf` Based on a .PJX](#updating-stringsdbf-based-on-a-pjx)
-  * [Updating `strings.dbf` Based on a .SCX](#updating-stringsdbf-based-on-a-scx)
-  * [Updating `strings.dbf` Based on a .VCX](#updating-stringsdbf-based-on-a-vcx)
-  * [Updating `strings.dbf` Based on a .MNX](#updating-stringsdbf-based-on-a-mnx)
-  * [Updating `strings.dbf` Based on a .FRX](#updating-stringsdbf-based-on-a-frx)
-  * [Transforming Reports Based on a .PJX](#transforming-reports-based-on-a-pjx)
-  * [Transforming Reports Based on a .FRX](#transforming-reports-based-on-a-frx)
-  * [INTL Iterator Classes](#intl-iterator-classes)
-  * [Class `INTLVisitor`](#class-intlvisitor)
-- [Extend INTL](#extend-intl)
-  * [Creating and Using Hooks](#creating-and-using-hooks)
-- [VFP's International Features](#vfps-international-features)
-  * [Introduction](#introduction-1)
-  * [A Survey of VFP's International Features](#a-survey-of-vfps-international-features)
-- [International Issues](#international-issues)
-  * [Background](#background-1)
-  * [Localization Factors to Consider](#localization-factors-to-consider)
-  * [Sources of Cultural Difference](#sources-of-cultural-difference)
-  * [Choosing Enabling Strategies](#choosing-enabling-strategies)
-  * [Checklist for International Issues](#checklist-for-international-issues)
-- [Using GENMENUX](#using-genmenux)
-  * [Introduction](#introduction-2)
-  * [GENMENUX Directives](#genmenux-directives)
-  * [Timing of GENMENUX Drivers and Directives](#timing-of-genmenux-drivers-and-directives)
-  * [Checklist for GENMENUX](#checklist-for-genmenux)
-  * [The MNX Structure](#the-mnx-structure)
-- [Glossary of Terms](#glossary-of-terms)
-- [Acknowledgments](#acknowledgments)
+  * [迭代器和访问器](#iterators-and-visitors)
+  * [基于 .PJX 更新 `strings.dbf`](#updating-stringsdbf-based-on-a-pjx)
+  * [基于 .SCX 更新 `strings.dbf`](#updating-stringsdbf-based-on-a-scx)
+  * [基于 .VCX 更新 `strings.dbf`](#updating-stringsdbf-based-on-a-vcx)
+  * [基于 .MNX 更新 `strings.dbf`](#updating-stringsdbf-based-on-a-mnx)
+  * [基于 .FRX 更新 `strings.dbf`](#updating-stringsdbf-based-on-a-frx)
+  * [基于 .PJX 的报表转换](#transforming-reports-based-on-a-pjx)
+  * [基于 .FRX 的报表转换](#transforming-reports-based-on-a-frx)
+  * [INTL 迭代器类](#intl-iterator-classes)
+  * [类 `INTLVisitor`](#class-intlvisitor)
+- [扩展 INTL](#extend-intl)
+  * [创建和使用 Hooks](#creating-and-using-hooks)
+- [VFP 的国际化特点](#vfps-international-features)
+  * [简介](#introduction-1)
+  * [VFP 国际化特点](#a-survey-of-vfps-international-features)
+- [国际化问题](#international-issues)
+  * [背景](#background-1)
+  * [需要考虑的本地化因素](#localization-factors-to-consider)
+  * [文化差异的渊源](#sources-of-cultural-difference)
+  * [选择有利的策略](#choosing-enabling-strategies)
+  * [国际化问题清单](#checklist-for-international-issues)
+- [使用 GENMENUX](#using-genmenux)
+  * [简介](#introduction-2)
+  * [GENMENUX 指令](#genmenux-directives)
+  * [GENMENUX 驱动程序和指令的时间安排](#timing-of-genmenux-drivers-and-directives)
+  * [GENMENUX 的核对表](#checklist-for-genmenux)
+  * [MNX 结构](#the-mnx-structure)
+- [术语表](#glossary-of-terms)
+- [鸣谢](#acknowledgments)
 
-# Installing INTL
+# 安装 INTL
 
-First, put the INTL files into a clean new directory.
+首先，将 INTL 文件放到一个单独的新文件夹中。
 
-Then,
+然后，
 
-* **Deploy files:** Manually place files relative to your project as described in How to [Correctly Place Your INTL Files](#how-to-correctly-place-your-intl-files).
+* **部署文件：** 按照[如何正确放置你的 INTL 文件](#how-to-correctly-place-your-intl-files)中的描述，手动放置与你的项目相对应的文件。.
 
-* **Modify the `config.fpw` file:** For menus, add the two lines to the `config.fpw` file as explained in [How to Localize Menus](#how-to-localize-menus).
+* **编辑 `config.fpw` 文件：** 对于菜单，在 `config.fpw` 文件中添加两行，就如[如何本地化菜单](#how-to-localize-menus)中解释的那样。
 
 * **Seed your Form class definition:** For now, probably forever, invoke INTL in forms with a `Form::Init()` statement that calls the INTL object. See [How to Get Automatic Form Localization](#how-to-get-automatic-form-localization).
 
-* If you need localization, **instantiate an INTL object:** Now when localization is required, create and configure an INTL object as described in [How to Instantiate an INTL Object](#how-to-instantiate-an-intl-object).
+* 如果你需要本地化，**实例化一个 INTL 对象:** 现在，当需要本地化时，创建并配置一个 INTL 对象，就如[如何实例化一个 INTL 对象](#how-to-instantiate-an-intl-object)所描述的那样。
 
-# INTL: How to...
+# INTL: 如何...
 
-## How to Correctly Place Your INTL Files
+## 如何正确放置你的 INTL 文件
 
-It is important for VFP to find INTL’s files as needed. Here’s where to put your INTL files so they are available to your development environment:
+对于 VFP 来说，根据需要找到 INTL 文件是非常重要的。这里描述如何放置 INTL 文件，这样，你就可以在开发环境中使用它：
 
-**Deploy your files as follows:**
+**按以下步骤部署文件:**
 
 <dl>
 <dt><code>genmenux.prg</code></dt>
-  <dd>VFP root or the project root directory.</dd>
+  <dd>VFP 安装的主目录或者项目的主目录</dd>
 <dt><code>intl.prg</code></dt>
-  <dd>VFP root or the project root directory, or along <code>SET PATH</code>.</dd>
+  <dd>VFP 安装的主目录或者项目的主目录，或者<code>SET PATH</code>中的搜索路径中</dd>
 <dt><code>strings.dbf strings.fpt strings.cdx</code></dt>
-  <dd>Project root directory, or along <code>SET PATH</code>.</dd>
+  <dd>项目的主目录，或者<code>SET PATH</code>中的搜索路径中</dd>
 <dt><code>msgsvc.dbf msgsvc.fpt msgsvc.cdx</code></dt>
-  <dd>VFP project root directory, or along <code>SET PATH</code>.</dd>
+  <dd>VFP 安装的主目录或者<code>SET PATH</code>中的搜索路径中</dd>
 </dl>
 
 ## How to Instantiate an INTL Object
@@ -3840,7 +3842,7 @@ oX = ox.SetHook( .NULL. )
 
 **VFP has a number of international features and quirks.**  VFP has many international features and quirks, and it's important to understand most of them. This section focuses first on VFP-specific issues, and then later focuses on the more germane issues related to the storage, display and printing of international characters.
 
-**Character Sets and Code Pages are important concepts in internationalization.**  If your application needs to address the international market, you need a thorough understanding of character sets and code pages. Only a developer creating an application for domestic consumption can get away without a knowledge of these terms.
+**Character Sets and 代码页 are important concepts in internationalization.**  If your application needs to address the international market, you need a thorough understanding of character sets and 代码页. Only a developer creating an application for domestic consumption can get away without a knowledge of these terms.
 
 **People expect software to conform to local norms.**  Gone are the days when the international market willingly lived within the limitations of North American software. Applications are increasingly expected to conform to the intricacies of the end-user's locale.
 
@@ -3878,9 +3880,9 @@ that follow.
 
 **These "`AS nCodePage`" elements recur in many of the topics below, and they are listed here once. Keep these factors in mind.** | <ul>
 
-* Wherever you see `nCodePage` in a command description, you can use `GETCP()` to display the Code Page dialog box, allowing you to specify a code page for the imported table or file.
-* In general, in cases where a nCodePage argument is permitted, and a value of 0 is assigned, no code page translation will take place.
-* If the specified value for nCodePage isn't supported, VFP generates `error 1914`, with message "`Code page number is invalid`.".
+* Wherever you see `nCodePage` in a command description, you can use `GETCP()` to display the 代码页 dialog box, allowing you to specify a 代码页 for the imported table or file.
+* In general, in cases where a nCodePage argument is permitted, and a value of 0 is assigned, no 代码页 translation will take place.
+* If the specified value for nCodePage isn't supported, VFP generates `error 1914`, with message "`代码页 number is invalid`.".
 
 ----
 
@@ -3913,7 +3915,7 @@ AFIELDS()` places structural information about the current table into an
 array.
 
 **Internationalization Gotcha:** `ArrayName[6]` contains logical true if
-code page translation is **not** allowed. Think of this as a `NOCPTRANS`
+代码页 translation is **not** allowed. Think of this as a `NOCPTRANS`
 flag for the field.
 
 **Internationalization Gotcha:** `ArrayName[8]` contains the field
@@ -3942,26 +3944,26 @@ with `DBSETPROP( cTableAlias,"Table","RuleText", cRuleText )`.
 
 ### `APPEND FROM ... AS nCodePage`
 
-**Specify the code page of the new data when appending table data from other locales or platforms.**
+**Specify the 代码页 of the new data when appending table data from other locales or platforms.**
 
 `APPEND FROM` adds records to the end of the currently selected table from another file.
 
-**Internationalization Gotcha:** the optional `AS nCodePage` argument specifies the code page ***of the source table or file***. As VFP appends the data, it automatically converts the data to the code page of the current table.
+**Internationalization Gotcha:** the optional `AS nCodePage` argument specifies the 代码页 ***of the source table or file***. As VFP appends the data, it automatically converts the data to the 代码页 of the current table.
 
 
 If you omit `AS nCodePage`, two things can happen:
 
-1.  If VFP cannot determine the code page of the source table or file,
+1.  If VFP cannot determine the 代码页 of the source table or file,
     VFP copies the contents of the source table or file and, as it
     copies the data, automatically converts the data to the current VFP
-    code page. If `SET CPDIALOG` is `ON`, the table in the currently
-    selected work area is marked with a code page. If you're appending
-    from a table not marked with a code page, the Code Page dialog is
-    displayed, allowing you to choose the code page of the table from
-    which you're appending. The current VFP code page can be determined
+    代码页. If `SET CPDIALOG` is `ON`, the table in the currently
+    selected work area is marked with a 代码页. If you're appending
+    from a table not marked with a 代码页, the 代码页 dialog is
+    displayed, allowing you to choose the 代码页 of the table from
+    which you're appending. The current VFP 代码页 can be determined
     with `CPCURRENT()`.
 
-2.  If VFP is able to determine the code page of the file being
+2.  If VFP is able to determine the 代码页 of the file being
     appended, VFP copies the contents of the appended table or file and,
     as it copies the data, automatically converts the data to the code
     page of the currently selected table.
@@ -3972,14 +3974,14 @@ If you omit `AS nCodePage`, two things can happen:
 
 `APPEND MEMO` copies the contents of a disk file to a memo field.
 
-**Specify the code page of the new data when appending memo field data from other locales or platforms.**
+**Specify the 代码页 of the new data when appending memo field data from other 语言环境 or platforms.**
 
-`AS nCodePage` specifies the code page of the file copied to the memo field.
+`AS nCodePage` specifies the 代码页 of the file copied to the memo field.
 
 **Internationalization Gotcha:** VFP copies the contents of the text file and, as it copies the data to the memo
-field, automatically converts the data from the code page you specify to the code page of the table containing
-the memo field. If the table containing the memo field is not marked with a code page, VFP automatically
-converts the data from the code page you specify to the current VFP code page.
+field, automatically converts the data from the 代码页 you specify to the 代码页 of the table containing
+the memo field. If the table containing the memo field is not marked with a 代码页, VFP automatically
+converts the data from the 代码页 you specify to the current VFP 代码页.
 
 ----
 
@@ -3988,16 +3990,16 @@ converts the data from the code page you specify to the current VFP code page.
 `APPEND PROCEDURES` appends stored procedures in a text file to the stored
 procedures snippet of the current database.
 
-**Specify the code page of the new data when appending DBC procedure code from other locales or platforms.**
+**Specify the 代码页 of the new data when appending DBC procedure code from other 语言环境 or platforms.**
 
-**Internationalization Gotcha:** `AS nCodePage` specifies the code page of the text file from which the stored
+**Internationalization Gotcha:** `AS nCodePage` specifies the 代码页 of the text file from which the stored
 procedures are appended. VFP copies the contents of the text file and, as it does so, automatically converts
-the contents of the text file to the code page you specify.
+the contents of the text file to the 代码页 you specify.
 
 If you omit `AS nCodePage`, VFP copies the contents of the text file from
 which the stored procedures are appended and, as it does so,
 automatically converts the contents of the text file to the current VFP
-code page. The current VFP code page can be determined with `CPCURRENT()`.
+代码页. The current VFP 代码页 can be determined with `CPCURRENT()`.
 
 ----
 
@@ -4007,7 +4009,7 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 `AT_C()`, which is similar to `AT()`, returns the beginning numeric position of the first occurrence of a character expression or memo field within another character expression or memo field, counting from the left-most character. The character expression or memo field can contain any combination of single-byte and double-byte characters.
 
-**Internationalization Tip** to enable your application for DBCS, always use `AT_C()` wherever you would use `AT()`. |
+**Internationalization Tip** to enable your application for 双字节字符集, always use `AT_C()` wherever you would use `AT()`. |
 
 ----
 
@@ -4017,7 +4019,7 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 `ATCC()`, which is similar to `ATC()`, returns the beginning numeric position of the first occurrence of a character expression or memo field within another character expression or memo field, without regard for the case of these two expressions. The character expression or memo field can contain any combination of single-byte and double-byte characters.
 
-**Internationalization Tip** to enable your application for DBCS, always use `ATCC()` wherever you would use `ATC()`. |
+**Internationalization Tip** to enable your application for 双字节字符集, always use `ATCC()` wherever you would use `ATC()`. |
 
 ----
 
@@ -4027,7 +4029,7 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 `ATCLINE()` returns the line number of the first occurrence of a character expression or memo field within another character expression or memo field, without regard for the case (upper or lower) of the characters in either expression.
 
-**Internationalization Tip** `ATCLINE()` works with both single-byte and double-byte character sets.
+**Internationalization Tip** `ATCLINE()` works with both single-byte and 双字节字符集.
 
 ----
 
@@ -4037,7 +4039,7 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 `ATLINE()` returns the line number of the first occurrence of a character expression or memo within another character expression or memo.
 
-**Internationalization Tip** `ATLINE()` works with both single-byte and double-byte character sets.
+**Internationalization Tip** `ATLINE()` works with both single-byte and 双字节字符集.
 
 ----
 
@@ -4061,11 +4063,11 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 ### `CHR()`
 
-**Using CHR(n ) instead of the character itself is a good way to prevent code page translation.**
+**Using CHR(n ) instead of the character itself is a good way to prevent 代码页 translation.**
 
 `CHR()` returns the character associated with the specified numeric ANSI code.
 
-**Internationalization Tip** you can use `CHR()` to prevent VFP's automatic code page translation. This is useful for program files which are not marked with code pages ID's. This may save you from disaster if you omit the `AS nCodePage` argument found in many VFP commands.
+**Internationalization Tip** you can use `CHR()` to prevent VFP's automatic 代码页 translation. This is useful for program files which are not marked with 代码页 ID's. This may save you from disaster if you omit the `AS nCodePage` argument found in many VFP commands.
 
 ----
 
@@ -4075,7 +4077,7 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 `CHRTRANC()`, which is similar to `CHRTRAN()`, replaces each character in a character expression that matches a character in a second character expression with the corresponding character in a third character expression. As you might expect, `CHRTRANC()` adjusts for single-byte and double-byte characters automatically.
 
-**Internationalization Tip:** to enable your application for DBCS, always use `CHRTRANC()` wherever you might use `CHRTRAN()`.
+**Internationalization Tip:** to enable your application for 双字节字符集, always use `CHRTRANC()` wherever you might use `CHRTRAN()`.
 
 ----
 
@@ -4091,23 +4093,23 @@ code page. The current VFP code page can be determined with `CPCURRENT()`.
 
 ### `COMPILE ... AS nCodePage`
 
-**Use `COMPILE...AS` or `SET CPCOMPILE` to compile source files originating from other locales or platforms.**
+**Use `COMPILE...AS` or `SET CPCOMPILE` to compile source files originating from other 语言环境 or platforms.**
 
 `COMPILE` compiles one or more source files.
 
-**Internationalization Gotcha**: the optional `AS nCodePage` specifies the code page for which the program is compiled. The code page you specify with `AS nCodePage` overrides the global compilation code page specified with `SET CPCOMPILE`. |
+**Internationalization Gotcha**: the optional `AS nCodePage` specifies the 代码页 for which the program is compiled. The 代码页 you specify with `AS nCodePage` overrides the global compilation 代码页 specified with `SET CPCOMPILE`. |
 
 ----
 
 ### `COPY MEMO ... AS nCodePage`
 
-**Use `AS <code page>` to create a file-copy of a memo in another code page.**
+**Use `AS <code page>` to create a file-copy of a memo in another 代码页.**
 
 `COPY MEMO` copies the contents of the specified memo field in the current record to a file.
 
-**Internationalization Gotcha:** `AS nCodePage` specifies the code page for the new file VFP copies the
+**Internationalization Gotcha:** `AS nCodePage` specifies the 代码页 for the new file VFP copies the
 contents of the specified memo field and, as it copies the data, automatically converts the data to the
-code page you specify for the text file.
+代码页 you specify for the text file.
 
 ----
 
@@ -4118,7 +4120,7 @@ code page you specify for the text file.
 `COPY STRUCTURE EXTENDED` creates a new table with fields containing the structure of the currently selected table.
 
 **Internationalization Gotcha**: this new table will contain the following notable fields which have internationalization implications:
-* `FIELD_NOCP` — `L` Code page translation not allowed (character and memo fields only )<br>
+* `FIELD_NOCP` — `L` 代码页 translation not allowed (character and memo fields only )<br>
 * `FIELD_ERR` — `M` Field validation text
 * `TABLE_ERR` — `M` Table validation text
 
@@ -4129,13 +4131,13 @@ code page you specify for the text file.
 COPY TO creates a new file from the contents of the currently selected
 table.
 
-**Internationalization Gotcha**: `AS nCodePage` specifies the code page
+**Internationalization Gotcha**: `AS nCodePage` specifies the 代码页
 for the new file. VFP copies the contents of the currently selected
 table and, as it copies the data, automatically converts the data to the
-code page you specify for the new table or file. If possible, VFP marks
-the newly created table or file with the code page you specify. If you
+代码页 you specify for the new table or file. If possible, VFP marks
+the newly created table or file with the 代码页 you specify. If you
 omit `AS nCodePage`, the newly created table or file is converted to the
-current VFP code page.
+current VFP 代码页.
 
 ----
 
@@ -4144,10 +4146,10 @@ current VFP code page.
 `COPY PROCEDURES` copies stored procedures in the current database to a
 text file.
 
-**Internationalization Gotcha**: `AS nCodePage` specifies the code page
+**Internationalization Gotcha**: `AS nCodePage` specifies the 代码页
 for the text file to which the stored procedures are copied. VFP copies
 the stored procedures and, as it does so, automatically converts the
-stored procedures to the code page you specify.
+stored procedures to the 代码页 you specify.
 
 ----
 
@@ -4155,7 +4157,7 @@ stored procedures to the code page you specify.
 
 **`CPCONVERT()` is used to transform character or memo data.**
 
-`CPCONVERT()` converts character or memo fields or character expressions to another code page.
+`CPCONVERT()` converts character or memo fields or character expressions to another 代码页.
 
 **Internationalization Gotcha**: don't forget to use `CPCONVERT()` when moving strings from one platform or locale to another.
 
@@ -4163,58 +4165,58 @@ stored procedures to the code page you specify.
 
 ### `CPCURRENT([1 | 2])`
 
-**Use `CPCURRENT()` to reckon system code page information.**
+**Use `CPCURRENT()` to reckon system 代码页 information.**
 
-`CPCURRENT()` returns the code page setting (if any ) in your VFP configuration file, or returns the current operating system code page.
+`CPCURRENT()` returns the 代码页 setting (if any ) in your VFP configuration file, or returns the current operating system 代码页.
 
 **Internationalization Gotcha:** `CPCURRENT()` returns one of the following:
 
-- In VFP, the current operating system code page if the CODEPAGE
+- In VFP, the current operating system 代码页 if the CODEPAGE
   configuration item isn't included in your configuration file. In
   previous versions of FoxPro, 0 is returned if the CODEPAGE
   configuration item isn't included in your configuration file.
 
-- The code page number specified in the CODEPAGE = configuration item
+- The 代码页 number specified in the CODEPAGE = configuration item
   in `config.fpw`.
 
-- The current operating system code page if you have included the
+- The current operating system 代码页 if you have included the
   following line in your configuration file: `CODEPAGE = AUTO`
 
-In VFP, `CPCURRENT(1)` returns the Windows code page, regardless of your
+In VFP, `CPCURRENT(1)` returns the Windows 代码页, regardless of your
 configuration CODEPAGE setting.
 
-`CPCURRENT(2)` always returns the underlying operating system code page,
+`CPCURRENT(2)` always returns the underlying operating system 代码页,
 regardless of your configuration CODEPAGE setting. For example, if
-you're running Windows, `CPCURRENT(2)` returns the MS-DOS code page.
+you're running Windows, `CPCURRENT(2)` returns the MS-DOS 代码页.
 
 ----
 
 ### `CPDBF([nWorkArea | cTableAlias])`
 
-**`CPDBF()` gives table code page information.**
+**`CPDBF()` gives table 代码页 information.**
 
-`CPDBF()` returns the code page of an open table.
+`CPDBF()` returns the 代码页 of an open table.
 
-**Internationalization Gotcha**: don't assume that a table is marked with the correct code page,
+**Internationalization Gotcha**: don't assume that a table is marked with the correct 代码页,
 especially if it comes from another platform or another locale.
 
 ---
 
 ### `CPZERO( cFilename[, codepage_number])`
 
-**Use `cpzero.prg` to change a table's code page id.**
+**Use `cpzero.prg` to change a table's 代码页 id.**
 
 Assuming you've installed tools, `cpzero.prg` can be found in your `TOOLS\CPZERO` directory.
-`cpzero.prg` removes the code page mark from any file that has a table file structure. After
+`cpzero.prg` removes the 代码页 mark from any file that has a table file structure. After
 removing the mark, `CPZERO()` applies another mark that you specify.
 
-**Internationalization Gotcha:** if tables do not have code page marks
-when you open them, VFP prompts you for a code page. If you specify the
-wrong code page, however, the data in the files won't display properly.
-To correct the code page, use `CPZERO()`.
+**Internationalization Gotcha:** if tables do not have 代码页 marks
+when you open them, VFP prompts you for a 代码页. If you specify the
+wrong 代码页, however, the data in the files won't display properly.
+To correct the 代码页, use `CPZERO()`.
 
 **`cpzero.prg` won't fix a corrupted table.**  It is worth noting that `CPZERO` won't fix a file with data corruption
-resulting from prior automatic code page translation. |
+resulting from prior automatic 代码页 translation. |
 
 ----
 
@@ -4222,10 +4224,10 @@ resulting from prior automatic code page translation. |
 
 `CREATE CURSOR` - SQL creates a temporary table. The `NOCPTRANS` argument,
 which applies when specifying field-level attributes, prevents
-translation to a different code page for character and memo fields.
+translation to a different 代码页 for character and memo fields.
 
 **Internationalization Gotcha:** use the `NOCPTRANS` if conversion to
-another code page is anticipated. Note that this is more likely if a
+another 代码页 is anticipated. Note that this is more likely if a
 subset of the temporary table is saved to disk.
 
 ----
@@ -4235,7 +4237,7 @@ subset of the temporary table is saved to disk.
 Creates a table.
 
 **Internationalization Gotcha**: the `NOCPTRANS` field-level argument
-prevents translation to a different code page for its character and memo
+prevents translation to a different 代码页 for its character and memo
 fields.
 
 ----
@@ -4430,7 +4432,7 @@ from a table ); and `TITLE` (on the top border of the menu ).
 the source of localization difficulties. The `DEFINE WINDOW` may have the
 following internationally sensitive clauses: the `TITLE` of the window;
 its `FONT` (which might need to vary with locale ); and the `ICON` file
-(which may not be appropriate for all locales ).
+(which may not be appropriate for all 语言环境 ).
 
 ----
 
@@ -4547,16 +4549,16 @@ boxes and as available with `MESSAGE()` and `AERROR()`, are in the language of V
 
 `EXPORT TO` copies data from a VFP table to a file in a different format.
 
-**Internationalization Gotcha:** `AS nCodePage` specifies the code page
+**Internationalization Gotcha:** `AS nCodePage` specifies the 代码页
 for the file EXPORT creates. VFP copies the contents of the currently
 selected table and, as it copies the data, automatically converts the
-data to the code page you specify for the new file. If possible, VFP
-marks the newly created file with the code page you specify.
+data to the 代码页 you specify for the new file. If possible, VFP
+marks the newly created file with the 代码页 you specify.
 
-If you omit AS nCodePage, no code page conversion occurs. If possible,
-VFP marks the newly created file with the code page of the table from
-which the data is copied. If nCodePage is 0, no code page conversion
-occurs and the new file is not marked with a code page.
+If you omit AS nCodePage, no 代码页 conversion occurs. If possible,
+VFP marks the newly created file with the 代码页 of the table from
+which the data is copied. If nCodePage is 0, no 代码页 conversion
+occurs and the new file is not marked with a 代码页.
 
 ----
 
@@ -4595,8 +4597,8 @@ the language of VFP localization. This otherwise cannot be controlled.
 
 ### `GETCP([nCodePage] [, cDialogCaption] [, cDialogTitle])`
 
-GETCP() prompts for a code page by displaying the Code Page dialog box,
-and then returns the number of the code page chosen.
+GETCP() prompts for a 代码页 by displaying the 代码页 dialog box,
+and then returns the number of the 代码页 chosen.
 
 **Internationalization Gotcha:** other than the parameters you pass, you
 cannot control the language displayed in this dialog — it comes from
@@ -4759,17 +4761,17 @@ Return values for the IME status in the Korean locale:
 `IMPORT FROM` imports data from an external file format to create a new
 VFP table.
 
-**Internationalization Gotcha:** `AS nCodePage` specifies the code page of
+**Internationalization Gotcha:** `AS nCodePage` specifies the 代码页 of
 the imported file. VFP copies the contents of the imported
 file and, as it copies the data, automatically converts the data to the
-current VFP code page.
+current VFP 代码页.
 
-If you omit `AS nCodePage` and VFP cannot determine the code page of the
+If you omit `AS nCodePage` and VFP cannot determine the 代码页 of the
 imported file, VFP copies the contents of the imported file and, as it
 copies the data, automatically converts the data to the current Visual
-FoxPro code page. If you omit `AS nCodePage` and VFP can determine the
-code page of the imported file, VFP automatically converts the data in
-the imported file from the data's code page to the current VFP code
+FoxPro 代码页. If you omit `AS nCodePage` and VFP can determine the
+代码页 of the imported file, VFP automatically converts the data in
+the imported file from the data's 代码页 to the current VFP code
 page.
 
 ----
@@ -4907,10 +4909,10 @@ program file.
 
 **Internationalization Gotcha:** `AS nCodePage` automatically converts
 accented characters in a program file created on another VFP platform.
-The numeric expression nCodePage specifies the code page of the VFP
+The numeric expression nCodePage specifies the 代码页 of the VFP
 platform on which the program file was created. The file is saved in
-this code page unless you choose "Save As" from the File menu to save
-the file in a different code page.
+this 代码页 unless you choose "Save As" from the File menu to save
+the file in a different 代码页.
 
 ----
 
@@ -4921,10 +4923,10 @@ file.
 
 **Internationalization Gotcha:** `AS nCodePage` automatically converts
 accented characters in a text file created on another VFP platform. The
-numeric expression nCodePage specifies the code page of the VFP platform
-on which the text file was created. The file is saved in this code page
+numeric expression nCodePage specifies the 代码页 of the VFP platform
+on which the text file was created. The file is saved in this 代码页
 unless you choose "Save As" from the File menu to save the file in a
-different code page.
+different 代码页.
 
 ----
 
@@ -4934,21 +4936,21 @@ Opens the Query Designer so you can modify or create a query. The Query
 Designer is a VFP dialog whose display language varies according to the
 localization of VFP.
 
-**Internationalization Gotcha:** `AS nCodePage` specifies the code page of
+**Internationalization Gotcha:** `AS nCodePage` specifies the 代码页 of
 the query. Include `AS nCodePage` if the query was created with a code
-page other than the current VFP code page. When the query is opened, VFP
-automatically converts the query to the current VFP code page.
+page other than the current VFP 代码页. When the query is opened, VFP
+automatically converts the query to the current VFP 代码页.
 
-The query is saved in its original code page when it is closed.
+The query is saved in its original 代码页 when it is closed.
 
 If you omit the `AS nCodePage` clause or `nCodePage` is 0, the query is not
-converted to the current VFP code page.
+converted to the current VFP 代码页.
 
 In VFP, queries can be added to a project, and you can specify the
-query's code page from within the Project Container. The Project
-Container keeps track of the query's code page. However, if you use
+query's 代码页 from within the Project Container. The Project
+Container keeps track of the query's 代码页. However, if you use
 `MODIFY QUERY` to open a query outside of the Project Container, you
-should include `AS nCodePage` to specify the query's code page.
+should include `AS nCodePage` to specify the query's 代码页.
 
 ---
 
@@ -4976,7 +4978,7 @@ Macintosh.
 
 OLE Custom Controls come from a variety of sources and, for the most
 part, you'll get a mixed-bag of results when you use OLE controls in
-international settings. Be sure to inquire about supported locales
+international settings. Be sure to inquire about supported 语言环境
 before you commit to deploy a particular OLE control.
 
 ----
@@ -5102,7 +5104,7 @@ expression within another character expression or memo field, counting
 from the last line.
 
 **Internationalization Gotcha**: this function works in both single-byte
-and double-byte character sets.
+and 双字节字符集.
 
 ----
 
@@ -5167,12 +5169,12 @@ index key length from 240 to 120. See [`INDEX ON`](#index-on).
 
 ### `SET CPCOMPILE TO [nCodePage]`
 
-`SET CPCOMPILE` globally specifies the code page for compiled programs.
+`SET CPCOMPILE` globally specifies the 代码页 for compiled programs.
 
 **Internationalization Gotcha:** `SET CPCOMPILE TO` without `nCodePage` to
-reset the compilation code page to the current code page. Use
-`CPCURRENT()` to determine the current code page. The `AS` clause in the
-`COMPILE` command to override the code page you specify with `SET CPCOMPILE`.
+reset the compilation 代码页 to the current 代码页. Use
+`CPCURRENT()` to determine the current 代码页. The `AS` clause in the
+`COMPILE` command to override the 代码页 you specify with `SET CPCOMPILE`.
 
 ----
 
@@ -5180,7 +5182,7 @@ reset the compilation code page to the current code page. Use
 
 **In your shipping app, make sure to `SET CPDIALOG OFF`**.
 
-`SET CPDIALOG` specifies whether the Code Page dialog box is displayed when
+`SET CPDIALOG` specifies whether the 代码页 dialog box is displayed when
 a table is opened.
 
 **Internationalization Gotcha:** `SET CPDIALOG` is useful only at design-time.
@@ -5301,7 +5303,7 @@ vary from locale to locale.
 
 ### `SET NOCPTRANS TO [Field1 [, Field2 ...]]`
 
-`SET NOCPTRANS` prevents translation to a different code page for selected
+`SET NOCPTRANS` prevents translation to a different 代码页 for selected
 fields in an open table.
 
 Issue `SET NOCPTRANS TO` without a set of fields to return to the default
@@ -5312,7 +5314,7 @@ fields specified in the last `SET NOCPTRANS` command you issued. Use the
 translated.
 
 Because VFP can be configured to automatically translate
-character and memo fields into other code pages, the `SET NOCPTRANS`
+character and memo fields into other 代码页, the `SET NOCPTRANS`
 command is available to prevent the automatic translation of fields
 containing binary data. For example, a memo field may contain a
 Microsoft Word document. When you access the Word document, you would
@@ -5521,7 +5523,7 @@ in which ole automation and ole controls exchange information.
 ### `SYS(3005, nLocaleID)`
 
 `SYS(3005)` sets the Locale ID, used by ole automation and ole controls.
-Here are the locales in VFP:
+Here are the 语言环境 in VFP:
 
 | `nLocaleID` | Language |
 | --------- | ----- |
@@ -5623,7 +5625,7 @@ Windows* by Bob Grommes, New Riders Publishing, 1993.**
 Applications need to adapt to the cultural variation of its users. How
 best to accomplish this? This section serves to survey some of the many
 linguistic and non-linguistic problems you are sure to encounter when
-your software spans locales.
+your software spans 语言环境.
 
 For most, the phrase “cross-cultural applications” conjures images of
 *language* variants. As it happens, language is only part of the
@@ -5648,7 +5650,9 @@ and independent parts is usually the first step in creating localized
 software. The purpose of enabling is to create products that can be
 brought to market more quickly.
 
-**Locales**
+**语言环境**
+
+*语言环境*指本地化的习俗、文化和语言。
 
 A *locale* describes the local conventions, culture, and language of a
 particular region. Typically each country represents a distinct locale
@@ -5727,10 +5731,10 @@ previous section yields something as follows:**
 
 | | Locale Block | Application Block |
 | ----- | ----- | ----- |
-| **Program-Time** | Cultural content added at program time by programmers who are presumably also linguists. | BIG. Essentially no Locale block other than maybe CONFIG.FP, and setup metadata. One app/exe for **all** locales. |
+| **Program-Time** | Cultural content added at program time by programmers who are presumably also linguists. | BIG. Essentially no Locale block other than maybe CONFIG.FP, and setup metadata. One app/exe for **all** 语言环境. |
 | **Generate-Time** | Cultural content added by automated means when generating source. Swapping from string / object / screen / menu libraries. | One app/exe for **each** locale. |
 | **Link-Time** | Cultural content added by automated means when building the application. Swapping project records from compiled obj libraries. Not inherently easy with native VFP tools. | One app/exe for **each** locale. |
-| **Run-Time** | Cultural content added by automated means (from phrasebook tables) when executing the application. Translation is essentially independent of the development team. | One app/exe for **all** locales, with one locale resource for each locale. app/exe independent of locale block. Swapping from string / graphic resources. |
+| **Run-Time** | Cultural content added by automated means (from phrasebook tables) when executing the application. Translation is essentially independent of the development team. | One app/exe for **all** 语言环境, with one locale resource for each locale. app/exe independent of locale block. Swapping from string / graphic resources. |
 
 Enabling techniques segmented by timing.
 
@@ -5948,9 +5952,9 @@ the only sensible option.
 There are many flavors Windows and VFP are available throughout the
 world. How will your application perform, say, over a German version of
 Windows, or with a German version of VFP? This matters. Many foreign
-code pages are unable to display some line draw characters, so that VFP
+代码页 are unable to display some line draw characters, so that VFP
 will display boxes with umlaut characters in the corners. Many European
-VFP developers use the 437 (US) code page, if they are able, to minimize
+VFP developers use the 437 (US) 代码页, if they are able, to minimize
 such problems.
 
 Always assume that foreign versions of operating systems and system
@@ -5992,7 +5996,7 @@ different in flow and scale from those in America. The paper forms may
 be incompatible with your screen layouts. Legislation or labor
 agreements may preclude certain modules, peripherals, or features. What
 then? Be prepared to make some surprising adaptations if you plan to
-adapt your stuff for overseas locales.
+adapt your stuff for overseas 语言环境.
 
 #### Implementation Issues
 
@@ -6236,7 +6240,7 @@ programming difficulties. For an excellent treatise of this subject,
 refer to the *Microsoft Developer Network CD*, in Number 5 (or later)
 for a document titled *International Handbook For Software Design.*
 
-In particular, bear in mind that locales may, depending on their writing
+In particular, bear in mind that 语言环境 may, depending on their writing
 system (among others), may possess propriety video standards.
 
 ### Numeric Values
@@ -6545,7 +6549,7 @@ users so that they can continue to be well-served.
 ### General issues
 
 - Do you understand the importance of balance between maintaining the
-  installed base and serving new users in new locales?
+  installed base and serving new users in new 语言环境?
 
 - Is your functional analysis thorough enough to identify all the
   cultural elements you are likely to encounter, and has the effort
@@ -7469,44 +7473,35 @@ you design such a driver, it is important that you call it in either
 MNXDRV1 or MNXDRV2. If you remove menu pads in MNXDRV3 or later, you
 will corrupt the MNX file and the MPR file will be unusable.
 
-# Glossary of Terms
+# 术语表
 
-##### Accelerator
+##### 加速器(Accelerator)
 
-An Alt+Key combination used to activate menus, menu items, and dialog
-items.
+Alt+Key 组合，用于激活菜单、菜单项和对话框。
 
-##### Code page
+##### 代码页(Code page)
 
-An ordered set of characters in which a numeric index is associated with
-each character. Also known as "character set".
+一个有序的字符集，其中每个字符都有一个数字索引。也被称为“字符集”。
 
-##### Compile-time
+##### 编译时(Compile-time)
 
-The raw source is transformed into a more machine-readable object
-format. Compiling can be initiated from the menu bar or with the VFP
-COMPILE command. Object files are created with .FXP, .MPX, or .QPX
-extensions. If you use the project manager, the object code is placed in
-memo fields in the project .PJX records.
+源码转换为机器可读的对象格式。编译可以从菜单执行或者使用 VFP 的 COMPILE 命令。
+编译后的对象文件通常的扩展名通常是 .FXP .MPX 或者 .QPX。如果你使用项目管理器，
+编译后的代码被放置在项目 .PJX 文件的备注字段中。
 
-##### Diacritic
+##### 变音符号(Diacritic)
 
-Any mark placed over, under, or through a Latin-based character, usually
-indicates a change in phonetic value from the unmarked state.
+放置在拉丁字符上方、下方或者中间的标记，通常与未标记的状态相比，表示音调的变化。
 
 #----
-#### `Double-byte character set (DBCS)`
+#### `双字节字符集(DBCS)`(Double-byte character set (DBCS))
 
-A character set with some characters consisting of one byte and others
-consisting of two bytes.
+一种字符集，一些字符由一个字节组成，另一些由两个字节组成。
 
-##### Enabling
+##### 启用(Enabling)
 
-Enabling is to identify and separate the cultural dependencies from a
-program or application. Segmenting a package into culturally dependent
-and independent parts is usually the first step in creating localized
-software. The purpose of enabling is to create products that can be
-brought to market more quickly.
+启用指从程序或应用中识别和分离文化依赖性。将软件包中与文化相关的部分和独立于语言的部分进行
+分割通常是创建本地化软件的第一步。启用的目的是创造可以更快推向市场的产品。
 
 ##### Generate-time
 
@@ -7516,70 +7511,52 @@ and produce the .MPR source. Note that the other power tools—the report
 writer and the label designer—do not go through an external generate
 process; VFP interprets report and label metadata at run-time.
 
-##### Globalization
+##### 全球化(Globalization)
 
-Globalization is the process of making a product ready for the
-international market.
+全球化是使一个产品准备好进入国际市场的过程。也就是进入国际市场的过程。
 
 ##### Link-time
 
 Link-time is when all the object files are combined when creating an
 executable program, like an .APP or an .EXE file.
 
-##### Locales
+##### 语言环境(Locales)
 
-A *locale* describes the local conventions, culture, and language of a
-particular region. Typically each country represents a distinct locale
-since national conventions and government regulations are important
-dimensions of uniqueness. Often there are distinct locales within
-countries, such as in Switzerland or Canada, where linguistic groups
-occupy separate regions.
+*语言环境* 指本地化的习俗、文化和语言。通常，因为国家和政府的法规具有特别的独特性，所以每个国家/地区都代表一个特定的地区。在国家内部，也存在不同的区域，例如瑞士和加拿大，每个不同的区域都有自己的语言环境。
 
-The term *locale* can have a wide interpretation. Linguistic difference
-is not the sole determinant of locale boundaries. In some situations
-California is arguably a separate locale from Nevada given the
-differences in state regulations. Within some companies you can find
-significant functional differences by taking an elevator or
-walking down the hall. Whenever you deal with separate groups, you will
-find locale-based differences.
+属于 *语言环境* 可以有很多的理解。语言上的差异并不是决定地区界限的唯一因素。在某些情况下，
+鉴于各州不同的法规，可以说加利福尼亚和内华达州是不同的地区。但是，如果你乘坐电梯或者从一个
+大厅经过，你就会发现有明显的不同。只要你和不同的团体打交道，你就会发现它们基于地域的差异。
 
-##### Localization
+##### 本地化(Localization)
 
-*Localization* is the process of adding features and elements to the
-program to provide cultural compatibility for the end user in a specific
-*locale*. Language is but one of the localizable elements.
+*本地化* 是在程序中添加功能和元素的过程，以便为特定“地区”的终端用户提供文化兼容性。语言仅仅是可本地化的元素之一。
 
 #----
-#### `Multi-byte character set (MBCS)`
+#### `多字节字符集(MBCS)`(Multi-byte character set (MBCS))
 
-A character set with some characters consisting of more than one byte.
+一种字符由一个以上的字节组成的字符集。
 
-##### Phrasebook
+##### 常用语手册(Phrasebook)
 
-A concordance table containing individual text strings, in two or more
-languages, for the purpose of automated translation and substitution of
-translated text into a program.
+包含两种或者多种语言的单个文本字符串的索引表，用于自动翻译和将翻译的文本替换到程序中。
 
 ##### Program-time
 
 When the developer is working with a text editor, or a power tool, from
 which raw source code is generated.
 
-##### Run-time
+##### 运行时(Run-time)
 
-When the finished program is actually executing.
+当编译的程序实际运行时。
 
-#### `Single-byte character set (SBCS)`
+#### `单字节字符集(SBCS)`(Single-byte character set (SBCS))
 
-A character encoding scheme wherein each character is represented by one
-byte. By definition, a SBCS can have a maximum of 256 characters.
+每个字符由一个字节表示的字符编码方案。根据定义，一个 SBCS 最多可以有 256 个字符。
 
-1.  Keep in mind all major word processing programs bundle two different
-    English dictionaries in their North American releases.
+1.  谨记，所有主要文字处理程序在其北美版本中都捆绑了两种不同的英语字典。
 
-2.  Cultural retrofits are more common because, before going
-    international, an application must usually prove its worth in a
-    local setting.
+2.  文化改造也很常见。因为在国际化之前，本地环境中的应用程序通常必须证明其价值。
 
 # Acknowledgments
 
