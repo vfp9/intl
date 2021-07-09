@@ -7,7 +7,7 @@
 [![issues](https://img.shields.io/github/issues/StevenBlack/intl)](https://img.shields.io/github/issues/StevenBlack/intl)
 [![BTC](https://img.shields.io/keybase/btc/StevenBlack)](https://img.shields.io/keybase/btc/StevenBlack)
 
-_翻译  xinjie  2021.06.27_
+_翻译  xinjie  2021.06.27 - _
 
 ***INTL 可以快速的在 Visual FoxPro(VFP) 中创建多语言软件。***
 它能够使您创建多语言 Visual FoxPro 应用程序，并最大限度的减少创建多版本过程中的麻烦。
